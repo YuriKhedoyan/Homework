@@ -1,0 +1,1 @@
+const isUniq = arr => arr.every((el, i) => !arr.slice(i + 1).includes(el));
