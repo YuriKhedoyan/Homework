@@ -1,1 +1,1 @@
-const isUniq = arr => arr.every((el, i) => !arr.slice(i + 1).includes(el));
+const isUnique = arr => arr.length === new Set(arr).size;
