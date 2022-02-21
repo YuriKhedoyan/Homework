@@ -1,0 +1,51 @@
+form {
+  margin-top: 250px;
+}
+
+input {
+  margin: 5px;
+}
+
+.text {
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  height: 25px;
+}
+
+#reset {
+  color: white;
+  background-color: red;
+  border: none;
+  width: 75px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+#save {
+  color: white;
+  background-color: green;
+  border: none;
+  width: 75px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+#reset:hover {
+  opacity: .5;
+  transition: .5s;
+}
+
+#save:hover {
+  opacity: .5;
+  transition: .3s;
+}
+
+.error {
+  color: red;
+  padding: 0;
+  margin: 2px;
+  display: none;
+}
