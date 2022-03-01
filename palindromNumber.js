@@ -1,0 +1,1 @@
+const palindromNumber = num => String(num).split("").reverse().join("") === String(num);
