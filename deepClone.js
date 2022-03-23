@@ -1,3 +1,11 @@
-let obj = {1: {2: {3: [1, 2, 3]}}}
+const copyObject = obj => {
+  const copiedObj = {};
 
-let clone = JSON.parse(JSON.stringify(obj));
+  for (let key in obj) {
+    copiedObj[key] = obj[key];
+  }
+
+  return copiedObj;
+};
+
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
