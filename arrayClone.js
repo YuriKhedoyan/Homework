@@ -1,2 +1,1 @@
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-let clone  = [...arr.slice(0,5), ...arr.slice(6)]
+const deleteEl = (arr, num) => [...arr.slice(0, num), ...arr.slice(num+1)];
