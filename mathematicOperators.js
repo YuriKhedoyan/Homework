@@ -1,13 +1,9 @@
 const mathematicOperators = (arr, num) => {
-  return arr.some((el, i) => {
-    if (el + arr[i + 1] === num) {
-      return true;
-    } else if (el - arr[i + 1] === num) {
-      return true;
-    } else if (el * arr[i + 1] === num) {
-      return true;
-    } else if (el / arr[i + 1] === num) {
-      return true;
-    }
+  return arr.some((el, ind) => {
+    return arr.slice(ind + 1).some((element, i) => {
+      if (el + element === num || el - element === num || el / element === num || el * element === num) {
+        return true
+      }
+    })
   })
-}
+} 
