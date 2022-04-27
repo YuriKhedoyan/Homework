@@ -7,8 +7,8 @@ const reverse = function (x) {
   } else {
     result = Number(arrayNumbers.reverse().join(""));
   }
-  console.log(result < 2 ** 32)
-  if (2 ** 32 < Math.abs(result)) {
+  
+  if (2 ** 31 < Math.abs(result)) {
     return 0
   } else {
     return result
