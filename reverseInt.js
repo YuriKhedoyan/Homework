@@ -9,8 +9,8 @@ const reverse = function (x) {
   }
   
   if (2 ** 31 < Math.abs(result)) {
-    return 0
+    return 0;
   } else {
-    return result
+    return result;
   }
 };
