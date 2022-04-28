@@ -1,0 +1,9 @@
+const firstUniqueElement = text => {
+  const arrayOfText = text.split('');
+
+  for (let i = 0; i < text.length; i++) {
+    if (arrayOfText.indexOf(arrayOfText[i]) === arrayOfText.lastIndexOf(arrayOfText[i])) {
+      return arrayOfText[i];
+    }
+  }
+}
