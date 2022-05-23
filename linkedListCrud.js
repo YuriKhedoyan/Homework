@@ -5,7 +5,7 @@ class LinkedList {
   }
 
   createElem(data) {
-    const node = { data, next: null }
+    const node = { data, next: null };
 
     if (this.lastElement) {
       this.lastElement.next = node;
