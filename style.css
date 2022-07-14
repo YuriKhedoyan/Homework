@@ -1,0 +1,149 @@
+#sc1 {
+  box-shadow: 0px 5px 100px 10px  #d9d9d9;
+  padding: 50px;
+  max-height: 100px;
+}
+
+#btn {
+  animation: none;
+  max-width: 0;
+  margin-top: 30px;
+  background-color: #305eca;
+  width: 100%;
+  padding: 17px;
+  padding-left: 30px;
+  padding-right: 30px;
+  position: absolute;
+  left: 100px
+}
+
+#btn svg{
+  color: white;
+  font-size: 30px;
+  object-fit: cover;
+}
+
+#headerText {
+  font-family: Sans-serif;
+}
+
+#grid1 {
+  padding-left: 170px;
+}
+
+#asd {
+  display: flex;
+}
+
+#asd p{
+  padding-bottom: 3px;
+  border: 1px solid #949494;
+  max-width: 50px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+#asd #free-solo-2-demo {
+  width: 250px !important;
+}
+
+.name {
+  padding: 0;
+  height: 1px;
+}
+
+.email {
+  color: #949494;
+  margin: 0px;
+}
+
+.settingsIcon:hover {
+  color: #007acc;
+}
+
+.deleteIcon:hover {
+  color: #ff1a1a;
+}
+
+.settingsIcon, .deleteIcon {
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.accountCircle {
+  display: flex;
+}
+
+.accountCircle .AccountCircleRoundedIcon {
+  height: 50px;
+  padding: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#sc2 {
+  margin-top: 5px;
+  padding-top: 50px;
+  min-width: 100%;
+  background-color: transparent;
+}
+
+#sc2 .sc2MainDiv {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+#sc2 .sc2MainDiv div table {
+  background-color: white;
+}
+
+#sc2 div table thead tr th{
+  font-family: Sans-serif;
+  color: #a4a4a4;
+}
+
+#sc2 div table thead tr #useName {
+  color: black;
+}
+
+#sc2 div table thead tr th div {
+  max-width: 10px !important;
+}
+
+.tableText svg {
+  padding-top: 5px;
+}
+
+#error {
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#success {
+  color: green;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.texts {
+  position: absolute;
+  top: 310px;
+  left: 550px;
+}
+
+.keyIcon {
+  background-color: #7e7ef1;
+  color: white;
+  width: 50px !important;
+  font-size: 25px !important;
+  border-radius: 25px;
+}
+
+.userRoleSection {
+  margin-top: 10px;
+  display: flex;
+}
+
+.userRole {
+  margin-top: 7px;
+}
