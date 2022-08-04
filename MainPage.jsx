@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './components/Assets/style.css';
+import '../Assets/style.css';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -30,16 +30,16 @@ import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-function App() {
+const MainPage = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(0);
   const [newUserName, setNewUserName] = useState('');
   const [newUserLastName, setNewUserLastName] = useState('');
-  const [newUserEmail, setUserEmail] = useState('');
-  const [newUserRole, setUserRole] = useState('User');  
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserRole, setUserRole] = useState('User');
   const [userName, setUserName] = useState(newUserName);
   const [userLastName, setUserLastName] = useState(newUserLastName);
-  const [email, setEmail] = useState(newUserEmail);
+  const [userEmail, setUserEmail] = useState(newUserEmail);
   const [role, setRole] = useState(newUserRole);
   const [users, addUsers] = useState([]);
   const [deleteWindow, setDeleteWindow] = useState(false);
@@ -73,9 +73,17 @@ function App() {
   };
 
   const handleOpen = () => setOpen(true);
+  const updateUserName = e => setUserName(e.target.value)
+  const updateUserLastName = e => setUserLastName(e.target.value)
+  const updateUserEmail = e => setUserEmail(e.target.value)
   const handleOpenDeleteWindow = () => setDeleteWindow(true);
   const handleCloseDeleteWindow = () => setDeleteWindow(false);
-  const handleOpenSettingsWindow = () => setSettingsWindow(true);
+  const handleOpenSettingsWindow = () => {
+    setSettingsWindow(true);
+    setUserName(newUserName);
+    setUserLastName(newUserLastName);
+    setUserEmail(newUserEmail);
+  }
   const handleCloseSettingsWindow = () => setSettingsWindow(false);
   const handleUserRoleChange = user => user.status = !user.status
 
@@ -98,7 +106,7 @@ function App() {
 
   const handleLastNameChange = e => setNewUserLastName(e.target.value.trim());
 
-  const handleEmailChange = e => setUserEmail(e.target.value.trim());
+  const handleEmailChange = e => setNewUserEmail(e.target.value.trim());
 
   const submit = e => {
     e.preventDefault();
@@ -108,11 +116,29 @@ function App() {
       setId(id + 1);
       setNewUserName('');
       setNewUserLastName('');
-      setUserEmail('');
+      setNewUserEmail('');
       setUserRole('User');
     } else {
       alert('Fill in all fileds');
     }
+  }
+
+  const updateUserData = (e, user) => {
+    e.preventDefault()
+    let currentUser = users[user.id];
+    if (currentUser.userName !== userName) {
+      currentUser.userName = userName;
+    }
+    if (currentUser.userLastName !== userLastName) {
+      currentUser.userLastName = userLastName;
+    }
+    if (currentUser.userEmail !== userEmail) {
+      currentUser.userEmail = userEmail;
+    }
+    setUserName('');
+    setUserLastName('');
+    setUserEmail('');
+    setSettingsWindow(false);
   }
 
   return (
@@ -133,7 +159,7 @@ function App() {
                     <span style={{ display: "flex" }}>
                       <div style={{ padding: "15px" }}><FaceIcon></FaceIcon></div>
                       <TextField id="filled-basic" label="* First Name" variant="filled" style={{ width: "300px" }} value={newUserName} onChange={handleUserNameChange} />
-                      <p> </p>
+                      <p> </p>
                       <TextField id="filled-basic" label="* Last Name" variant="filled" style={{ width: "300px" }} value={newUserLastName} onChange={handleLastNameChange} />
                     </span>
                   </Typography>
@@ -197,9 +223,6 @@ function App() {
                       key={user?.name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      {/* <span>
-                      <AccountCircleRoundedIcon className='AccountCircleRoundedIcon' sx={{ fontSize: 50, color: "gray" }}></AccountCircleRoundedIcon>
-                    </span> */}
                       <TableCell component="th" scope="row">
                         <div className='accountCircle'>
                           <div>
@@ -234,7 +257,7 @@ function App() {
                                   <p className='uploadPhoto'>UPLOAD A PHOTO</p>
                                   <p className='userName'>{user.userName}</p>
                                   <p className='userLastName'>{user.userLastName}</p>
-                                  <p className='userEmail'>{user?.userEmail}</p>
+                                  <p className='userEmail'>{user.userEmail}</p>
                                   <Button variant="contained" id='resendInviteBtn'> Resend the invite </Button>
                                 </div>
                               </Grid>
@@ -244,7 +267,17 @@ function App() {
                                   {user.status ? <><Switch className='userRole' checked={user?.status} onClick={user.status = !user.status} /><p >The user is active</p></> : <><Switch className='userRole' checked={user?.status} onClick={user.status = !user.status} /><p >The user is deactiv</p></>}
                                 </div>
                                 <div>
-                                  <TextField id="filled-basic" label="* First Name" variant="filled" style={{ width: "310px" }}/>
+                                  <form onSubmit={e => updateUserData(e, user)}>
+                                    <TextField id="filled-basic" label="* First Name" variant="filled" style={{ width: "310px" }} value={userName} onChange={updateUserName} />
+                                    <br></br>
+                                    <br></br>
+                                    <TextField id="filled-basic" label="* Last Name" variant="filled" style={{ width: "310px" }} value={userLastName} onChange={updateUserLastName} />
+                                    <br></br>
+                                    <br></br>
+                                    <TextField id="filled-basic" label="* Email" variant="filled" style={{ width: "310px" }} value={userEmail} onChange={updateUserEmail} />
+                                    <br></br>
+                                    <button type='submit' className='submit'>Save Changes</button>
+                                  </form>
                                 </div>
                               </Grid>
                               <Grid item md={4}></Grid>
@@ -274,7 +307,7 @@ function App() {
       </div>
       <br></br>
     </>
-  );
+  )
 }
 
-export default App;
+export default MainPage;
