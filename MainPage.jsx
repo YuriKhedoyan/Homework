@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import '../Assets/style.css';
+import '../../Assets/style.css';
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import SpeedDial from '@mui/material/SpeedDial';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -29,6 +28,9 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PremissionsGroup1 from '../common/PremissionsGroup1'
+import PremissionsGroup2 from '../common/PremissionsGroup2'
+import PremissionsGroup3 from '../common/PremissionsGroup3'
 
 const MainPage = () => {
   const [open, setOpen] = useState(false);
@@ -36,12 +38,12 @@ const MainPage = () => {
   const [newUserName, setNewUserName] = useState('');
   const [newUserLastName, setNewUserLastName] = useState('');
   const [newUserEmail, setNewUserEmail] = useState('');
-  const [newUserRole, setUserRole] = useState('User');
+  const [newUserRole, setNewUserRole] = useState('User');
   const [userName, setUserName] = useState(newUserName);
   const [userLastName, setUserLastName] = useState(newUserLastName);
   const [userEmail, setUserEmail] = useState(newUserEmail);
-  const [role, setRole] = useState(newUserRole);
-  const [users, addUsers] = useState([]);
+  const [userRole, setUserRole] = useState(newUserRole);
+  const [users] = useState([]);
   const [deleteWindow, setDeleteWindow] = useState(false);
   const [deleteUserName, setDeleteUserName] = useState('');
   const [settingsWindow, setSettingsWindow] = useState(false);
@@ -72,17 +74,19 @@ const MainPage = () => {
     p: 4,
   };
 
+  const handleUserNameChange = e => setNewUserName(e.target.value.trim());
+  const handleLastNameChange = e => setNewUserLastName(e.target.value.trim());
+  const handleEmailChange = e => setNewUserEmail(e.target.value.trim());
   const handleOpen = () => setOpen(true);
-  const updateUserName = e => setUserName(e.target.value)
-  const updateUserLastName = e => setUserLastName(e.target.value)
-  const updateUserEmail = e => setUserEmail(e.target.value)
+  const updateUserName = e => setUserName(e.target.value.trim())
+  const updateUserLastName = e => setUserLastName(e.target.value.trim())
+  const updateUserRole = e => setUserRole(e.target.value.trim())
   const handleOpenDeleteWindow = () => setDeleteWindow(true);
   const handleCloseDeleteWindow = () => setDeleteWindow(false);
   const handleOpenSettingsWindow = () => {
     setSettingsWindow(true);
     setUserName(newUserName);
     setUserLastName(newUserLastName);
-    setUserEmail(newUserEmail);
   }
   const handleCloseSettingsWindow = () => setSettingsWindow(false);
   const handleUserRoleChange = user => user.status = !user.status
@@ -102,12 +106,6 @@ const MainPage = () => {
     })
   }
 
-  const handleUserNameChange = e => setNewUserName(e.target.value.trim());
-
-  const handleLastNameChange = e => setNewUserLastName(e.target.value.trim());
-
-  const handleEmailChange = e => setNewUserEmail(e.target.value.trim());
-
   const submit = e => {
     e.preventDefault();
     if (newUserName !== '' && newUserLastName !== '' && newUserEmail !== '') {
@@ -117,7 +115,7 @@ const MainPage = () => {
       setNewUserName('');
       setNewUserLastName('');
       setNewUserEmail('');
-      setUserRole('User');
+      setNewUserRole('User');
     } else {
       alert('Fill in all fileds');
     }
@@ -125,20 +123,17 @@ const MainPage = () => {
 
   const updateUserData = (e, user) => {
     e.preventDefault()
-    let currentUser = users[user.id];
-    if (currentUser.userName !== userName) {
+    let currentUser = users[user.id > users.length - 1 ? users.length - 1 : user.id];
+    if (userName !== '' && userLastName !== '') {
       currentUser.userName = userName;
-    }
-    if (currentUser.userLastName !== userLastName) {
       currentUser.userLastName = userLastName;
+      currentUser.userRole = userRole;
+      setUserName('');
+      setUserLastName('');
+      setSettingsWindow(false);
+    } else {
+      alert('Fill in all fileds');
     }
-    if (currentUser.userEmail !== userEmail) {
-      currentUser.userEmail = userEmail;
-    }
-    setUserName('');
-    setUserLastName('');
-    setUserEmail('');
-    setSettingsWindow(false);
   }
 
   return (
@@ -159,7 +154,7 @@ const MainPage = () => {
                     <span style={{ display: "flex" }}>
                       <div style={{ padding: "15px" }}><FaceIcon></FaceIcon></div>
                       <TextField id="filled-basic" label="* First Name" variant="filled" style={{ width: "300px" }} value={newUserName} onChange={handleUserNameChange} />
-                      <p> </p>
+                      <p className='transparentSymbol'>  </p>
                       <TextField id="filled-basic" label="* Last Name" variant="filled" style={{ width: "300px" }} value={newUserLastName} onChange={handleLastNameChange} />
                     </span>
                   </Typography>
@@ -174,7 +169,7 @@ const MainPage = () => {
                       <div style={{ padding: "15px" }}><KeyIcon></KeyIcon></div>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Role" variant="filled" style={{ width: "310px" }} value={newUserRole} onChange={e => setUserRole(e.target.value)} >
+                        <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Role" variant="filled" style={{ width: "310px" }} value={newUserRole} onChange={e => setNewUserRole(e.target.value)} >
                           <MenuItem value={"Admin"}>Admin</MenuItem>
                           <MenuItem value={"User"}>User</MenuItem>
                         </Select>
@@ -217,7 +212,7 @@ const MainPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users ? users.map((user, i) => (
+                {users ? users.map(user => (
                   <>
                     <TableRow
                       key={user?.name}
@@ -232,12 +227,11 @@ const MainPage = () => {
                         </div>
                       </TableCell>
                       <TableCell align="center" className='tableText'>{user?.userRole === 'Admin' ? <div className='userRoleSection'><KeyIcon className='keyIcon'></KeyIcon><p className='userRole'>{user?.userRole}</p></div> : <div className='userRoleSection'><p className='userRole'>{user?.userRole}</p></div>}</TableCell>
-                      <TableCell align="center" className='tableText' ><Switch checked={user?.status} onClick={user.status = !user.status} /></TableCell>
+                      <TableCell align="center" className='tableText' ><Switch checked={user?.status} /></TableCell>
                       <TableCell align="center" className='tableText'>
                         <SettingsIcon className='settingsIcon' onClick={handleOpenSettingsWindow}></SettingsIcon>
                         <Modal open={settingsWindow} onClose={handleCloseSettingsWindow} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" >
                           <Box sx={styleForSettingsWindow} >
-
                             <Grid container spacing={2}>
                               <Grid item md={12} id="userSetupGrid1">
                                 <h1 id="headerText">User Setup</h1>
@@ -264,23 +258,53 @@ const MainPage = () => {
                               <Grid item md={4}>
                                 <h1>Details</h1>
                                 <div style={{ display: 'flex' }}>
-                                  {user.status ? <><Switch className='userRole' checked={user?.status} onClick={user.status = !user.status} /><p >The user is active</p></> : <><Switch className='userRole' checked={user?.status} onClick={user.status = !user.status} /><p >The user is deactiv</p></>}
+                                  {user.status ? <><Switch className='userRole' checked={user?.status} /><p >The user is active</p></> : <><Switch className='userRole' checked={user?.status} /><p >The user is deactiv</p></>}
                                 </div>
                                 <div>
                                   <form onSubmit={e => updateUserData(e, user)}>
-                                    <TextField id="filled-basic" label="* First Name" variant="filled" style={{ width: "310px" }} value={userName} onChange={updateUserName} />
+                                    <TextField id="filled-basic" label="*New First Name" variant="filled" style={{ width: "310px" }} value={userName} onChange={updateUserName} title='Write the user new Name' />
                                     <br></br>
                                     <br></br>
-                                    <TextField id="filled-basic" label="* Last Name" variant="filled" style={{ width: "310px" }} value={userLastName} onChange={updateUserLastName} />
+                                    <TextField id="filled-basic" label="*New Last Name" variant="filled" style={{ width: "310px" }} value={userLastName} onChange={updateUserLastName} title='Write the user new Last Name' />
                                     <br></br>
                                     <br></br>
-                                    <TextField id="filled-basic" label="* Email" variant="filled" style={{ width: "310px" }} value={userEmail} onChange={updateUserEmail} />
+                                    <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Role" variant="filled" style={{ width: "310px" }} value={userRole} onChange={updateUserRole} >
+                                      <MenuItem value={"Admin"}>Admin</MenuItem>
+                                      <MenuItem value={"User"}>User</MenuItem>
+                                    </Select>
                                     <br></br>
                                     <button type='submit' className='submit'>Save Changes</button>
                                   </form>
                                 </div>
                               </Grid>
-                              <Grid item md={4}></Grid>
+                              <Grid item md={4}>
+                                <div className='accordionDiv'>
+
+                                  <Grid container spacing={2}>
+                                    <Grid item sm={10}>
+                                      <h1>Premissions</h1>
+                                    </Grid>
+                                    <Grid item sm={2}>
+                                      <br></br>
+                                      <p>Admin</p>
+                                    </Grid>
+                                  </Grid>
+                                  <br></br>
+                                  <Grid container spacing={2}>
+                                    <Grid item sm={9}>
+                                      <b className='accordionText'>Super Admin</b>
+                                    </Grid>
+                                    <Grid item sm={3}>
+                                      <Switch />
+                                    </Grid>
+                                  </Grid>
+                                  <br></br>
+                                  
+                                  <PremissionsGroup1></PremissionsGroup1>
+                                  <PremissionsGroup2></PremissionsGroup2>
+                                  <PremissionsGroup3></PremissionsGroup3>
+                                </div>
+                              </Grid>
                             </Grid>
                           </Box>
                         </Modal>
@@ -304,7 +328,7 @@ const MainPage = () => {
             </Table>
           </TableContainer>
         </div>
-      </div>
+      </div >
       <br></br>
     </>
   )
